@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Calendário Litúrgico Cristão</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="noise-overlay"></div>
+
+    <div id="intro-screen" class="intro-overlay">
+        <div class="intro-content">
+            <h1 class="intro-title">Ordo Temporis</h1>
+            <p class="intro-text">
+                Contemplação do tempo sagrado. <br>
+                Solenidades, Santos e Liturgia Diária.
+            </p>
+            <button id="start-btn" class="intro-btn">Entrar</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="calendar-wrapper">
+            <div class="header">
+                <h1 class="month-year" id="monthYear">Carregando...</h1>
+                <div class="nav-container">
+                    <button class="nav-btn" id="prevBtn">&lt;</button>
+                    <button class="nav-btn" id="nextBtn">&gt;</button>
+                </div>
+            </div>
+            
+            <div class="weekdays">
+                <div>Dom</div>
+                <div>Seg</div>
+                <div>Ter</div>
+                <div>Qua</div>
+                <div>Qui</div>
+                <div>Sex</div>
+                <div>Sáb</div>
+            </div>
+            
+            <div class="days-grid" id="daysGrid"></div>
+        </div>
+
+        <div class="info-panel" id="infoPanel">
+            
+            <div class="panel-header-row">
+                <div class="live-clock-container">
+                    <div id="clock-time" class="clock-time">00:00</div>
+                </div>
+                
+                <div class="moon-widget">
+                    <div class="moon-visual" id="moonVisual"></div>
+                    <span class="moon-label" id="moonLabel">--</span>
+                </div>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="selected-day-info">
+                <div class="info-date" id="panelDate">--</div>
+                <div class="info-weekday" id="panelWeekday">Selecione um dia</div>
+                
+                <div class="tags-row">
+                    <span id="panelLitType" class="status-badge">Tempo Comum</span>
+                    <span id="fastingIcon" class="fasting-badge" style="display:none">† Jejum</span>
+                </div>
+
+                <div class="info-saint" id="panelSaint">--</div>
+                
+                <div class="season-progress-wrapper">
+                    <span class="progress-label">Ciclo Litúrgico</span>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="seasonProgress"></div>
+                    </div>
+                </div>
+
+                <div class="info-reading-box">
+                    <h3>Evangelho</h3>
+                    <div class="info-reading" id="panelReading">...</div>
+                </div>
+
+                <div class="prayer-box">
+                    <h3>Salmo do Dia</h3>
+                    <p class="prayer-text" id="panelPrayer">...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="developer-credits">
+        Criado e Desenvolvido por <span>Vinicius Oliveira - Desenvolvedor Front-end</span>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

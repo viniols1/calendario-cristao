@@ -1,0 +1,461 @@
+:root {
+    --bg-color: #050505;
+    --glass-bg: rgba(20, 20, 20, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --text-primary: #e0e0e0;
+    --text-secondary: #888888;
+    
+    --color-gold: #D4AF37;   
+    --color-purple: #8e44ad; 
+    --color-green: #27ae60;  
+    --color-red: #c0392b;    
+    
+    --font-main: 'Inter', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+
+    --transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-main);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden; 
+    background-image: radial-gradient(circle at 50% 0%, #1f1f1f 0%, #000000 80%);
+}
+
+.noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.intro-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 3000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    transition: opacity 1s ease, visibility 1s;
+}
+
+.intro-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.intro-content { max-width: 100%; }
+
+.intro-title {
+    font-family: var(--font-serif);
+    font-size: 4rem; 
+    font-style: italic;
+    color: var(--color-gold);
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+}
+
+.intro-text {
+    color: var(--text-secondary);
+    font-weight: 300;
+    margin-bottom: 3rem;
+    line-height: 1.5;
+    font-size: 1rem;
+}
+
+.intro-btn {
+    padding: 12px 35px;
+    background: transparent;
+    border: 1px solid var(--color-gold);
+    color: var(--color-gold);
+    font-family: var(--font-main);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.intro-btn:hover {
+    background: var(--color-gold);
+    color: #000;
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 2rem;
+    width: 90%;
+    max-width: 1300px;
+    height: calc(100vh - 100px);
+    margin-top: 20px;
+    z-index: 20;
+}
+
+.calendar-wrapper {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 2rem;
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.month-year {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: #fff;
+    letter-spacing: -1px;
+    text-shadow: 0 0 20px rgba(255,255,255,0.1);
+}
+
+.nav-container { display: flex; gap: 10px; }
+
+.nav-btn {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid transparent;
+    color: #fff;
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-btn:hover { background: rgba(255,255,255,0.2); }
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 1rem;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    flex-grow: 1; 
+}
+
+.day {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.day:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.day.active {
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+    border: 1px solid var(--color-gold);
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.day-number {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.day-tag {
+    font-size: 0.6rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0.7;
+}
+
+.liturgy-dot {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    box-shadow: 0 0 5px currentColor;
+}
+
+.info-panel {
+    background: #000;
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: border-color 0.3s ease;
+}
+
+.panel-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.clock-time {
+    font-family: 'Inter', monospace;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--text-primary);
+}
+
+.moon-widget {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.moon-visual {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.moon-label {
+    font-size: 0.6rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.separator {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--glass-border), transparent);
+    margin-bottom: 2rem;
+}
+
+.info-date {
+    font-family: var(--font-serif);
+    font-size: 4rem;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    word-break: break-all;
+}
+
+.info-weekday {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.tags-row {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.status-badge, .fasting-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.status-badge { border: 1px solid var(--glass-border); }
+.fasting-badge {
+    border: 1px solid rgba(231, 76, 60, 0.4);
+    background: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+}
+
+.info-saint {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    font-style: italic;
+    margin-bottom: 2rem;
+    color: var(--color-gold);
+    border-left: 2px solid var(--glass-border);
+    padding-left: 1rem;
+    line-height: 1.3;
+}
+
+.season-progress-wrapper { margin-bottom: 2rem; }
+.progress-label {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 5px;
+}
+.progress-bar-bg {
+    width: 100%;
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--color-gold);
+    transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 0 10px currentColor;
+}
+
+.info-reading-box { margin-bottom: 1.5rem; }
+.info-reading-box h3, .prayer-box h3 {
+    font-size: 0.7rem;
+    color: var(--color-gold);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    opacity: 0.8;
+}
+.info-reading {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #ccc;
+    margin-bottom: 1rem;
+}
+.prayer-box {
+    background: rgba(255,255,255,0.03);
+    padding: 1rem;
+    border-radius: 12px;
+    border-left: 2px solid var(--text-secondary);
+}
+.prayer-text {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #bbb;
+    line-height: 1.6;
+}
+
+.developer-credits {
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    z-index: 20;
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
+.developer-credits span { color: var(--color-gold); font-weight: 600; }
+
+@media (max-width: 1024px) {
+    .container {
+        grid-template-columns: 1fr;
+        height: auto;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    body {
+        height: auto;
+        padding-top: 20px;
+        justify-content: flex-start;
+    }
+
+    .info-date { font-size: 3rem; }
+    .calendar-wrapper { min-height: 500px; }
+}
+
+@media (max-width: 600px) {
+    .intro-title { font-size: 2.5rem; }
+    
+    .container {
+        width: 95%;
+        margin-top: 10px;
+    }
+
+    .calendar-wrapper {
+        padding: 1rem;
+        min-height: auto;
+    }
+
+    .header { margin-bottom: 1rem; }
+    .month-year { font-size: 1.5rem; }
+
+    .weekdays {
+        font-size: 0.65rem;
+        letter-spacing: 0;
+    }
+
+    .days-grid { gap: 4px; }
+    
+    .day {
+        padding: 5px;
+        min-height: 60px;
+    }
+
+    .day-number { font-size: 1rem; }
+    .day-tag { display: none;  }
+
+    .info-panel { padding: 1.5rem; }
+    .info-date { font-size: 2.5rem; }
+    .info-saint { font-size: 1.2rem; }
+    .panel-header-row { flex-direction: row; }
+    .clock-time { font-size: 1.4rem; }
+}
