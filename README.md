@@ -30,7 +30,7 @@ O objetivo é fornecer não apenas a data, mas o contexto espiritual do dia: a c
 * Abra o arquivo Index em qualquer navegador moderno.
 * Abra o link do GitGub Pages
 
-## Desenvolvido por:
+## Criado e Desenvolvido por:
 * Vinicius Oliveira - Desenvolvedor Front-end
 
 
